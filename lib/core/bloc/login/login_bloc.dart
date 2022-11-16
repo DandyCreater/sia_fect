@@ -24,10 +24,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           emit(LoginDispose());
           emit(LoginSuccess(value: result));
         } else {
-          emit(LoginFailed(message: result.message));
+          emit(LoginFailed(message: result));
         }
       } catch (e) {
-        emit(LoginFailed(message: "Bloc Login Error : $e"));
+        emit(LoginFailed(messages: "LOGIN BLOC ERROR $e"));
       }
     });
   }

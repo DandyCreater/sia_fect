@@ -124,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    state.message!,
+                    state.message!.message.toString(),
                     style: const TextStyle(color: Colors.white),
                   ),
                   duration: const Duration(milliseconds: 1000),

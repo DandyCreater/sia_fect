@@ -24,11 +24,12 @@ class LoginSuccess extends LoginState {
 }
 
 class LoginFailed extends LoginState {
-  final String? message;
+  final LoginResponseModel? message;
+  String? messages;
 
-  const LoginFailed({required this.message});
+  LoginFailed({this.message, this.messages});
 
   @override
   // TODO: implement props
-  List<Object> get props => [message!];
+  List<Object> get props => [message!, messages!];
 }

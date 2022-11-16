@@ -1,12 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sia_fect/core/bloc/login/login_bloc.dart';
+import 'package:sia_fect/core/bloc/nre_data/nredata_bloc.dart';
 import 'package:sia_fect/core/const/color_pallete.dart';
 import 'package:sia_fect/core/const/constants.dart';
 import 'package:sia_fect/core/const/strings.dart';
 import 'package:sia_fect/data/local/auth_services.dart';
 import 'package:sia_fect/screens/edit_profile_page/edit_profile_page.dart';
 import 'package:sia_fect/screens/profile_page/profile_card.dart';
+import 'package:skeletons/skeletons.dart';
 
 class ProfilePage extends StatefulWidget {
   static const String routeName = '/profile';
@@ -101,62 +105,71 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Container(
                   padding: const EdgeInsets.only(
                       top: 50, left: 16, right: 16, bottom: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        user?['name'] ?? '',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        Strings.academicInformation,
-                        style: TextStyle(
-                          color: ColorPallete.primary,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      ProfileCard(
-                          title: Strings.registrationNumber,
-                          value: user?['registration_number'] ?? ''),
-                      ProfileCard(
-                          title: Strings.faculty,
-                          value: user?['faculty'] ?? ''),
-                      ProfileCard(
-                          title: Strings.major, value: user?['major'] ?? ''),
-                      user?['user_type'] == 'student'
-                          ? ProfileCard(
-                              title: Strings.Semestre,
-                              value: user?['Semestre'] ?? '-')
-                          : const SizedBox.shrink(),
-                      const SizedBox(height: 16),
-                      const Text(
-                        Strings.personalInformation,
-                        style: TextStyle(
-                          color: ColorPallete.primary,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      ProfileCard(
-                          title: Strings.name, value: user?['name'] ?? ''),
-                      ProfileCard(
-                          title: Strings.placeOfBirth,
-                          value: user?['place_of_birth'] ?? ''),
-                      ProfileCard(
-                          title: Strings.dateOfBirth,
-                          value: user?['date_of_birth'] ?? ''),
-                      ProfileCard(
-                          title: Strings.phone, value: user?['phone'] ?? ''),
-                    ],
+                  child: BlocBuilder<LoginBloc, LoginState>(
+                    builder: (context, state) {
+                      if (state is LoginSuccess) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              state.value!.nome!,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 16),
+                            const Text(
+                              Strings.academicInformation,
+                              style: TextStyle(
+                                color: ColorPallete.primary,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            ProfileCard(
+                                title: Strings.registrationNumber,
+                                value: state.value!.nre!),
+                            ProfileCard(
+                                title: Strings.faculty,
+                                value: user?['faculty'] ?? ''),
+                            ProfileCard(
+                                title: Strings.major,
+                                value: user?['major'] ?? ''),
+                            user?['user_type'] == 'student'
+                                ? ProfileCard(
+                                    title: Strings.Semestre,
+                                    value: user?['Semestre'] ?? '-')
+                                : const SizedBox.shrink(),
+                            const SizedBox(height: 16),
+                            const Text(
+                              Strings.personalInformation,
+                              style: TextStyle(
+                                color: ColorPallete.primary,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            ProfileCard(
+                                title: Strings.name, value: state.value!.nome!),
+                            ProfileCard(
+                                title: Strings.placeOfBirth,
+                                value: user?['place_of_birth'] ?? ''),
+                            ProfileCard(
+                                title: Strings.dateOfBirth,
+                                value: user?['date_of_birth'] ?? ''),
+                            ProfileCard(
+                                title: Strings.phone,
+                                value: user?['phone'] ?? ''),
+                          ],
+                        );
+                      }
+                      return const SkeletonAvatar();
+                    },
                   ),
                 ),
               ),
