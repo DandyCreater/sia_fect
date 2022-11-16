@@ -62,6 +62,7 @@ class _MyAppState extends State<MyApp> {
               BlocProvider(create: (_) => NredataBloc()),
             ],
             child: MaterialApp(
+              debugShowCheckedModeBanner: false,
               title: Strings.appName,
               theme: ThemeData(
                 colorScheme: ThemeData()

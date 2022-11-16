@@ -42,39 +42,39 @@ class _ValorEstudantePageState extends State<ValorEstudantePage> {
     });
   }
 
-  Widget buildContentWidgets() {
-    List<Widget> widgets = [];
+  // Widget buildContentWidgets() {
+    // List<Widget> widgets = [];
 
-    if (user?['score'].isNotEmpty) {
-      for (var e in user?['score']) {
-        if (e?['is_final']) {
-          widgets.add(
-            SkripsiSection(data: e!),
-          );
-        } else {
-          widgets.add(
-            NilaiSection(
-              data: e!,
-              onPress: (index) {},
-            ),
-          );
-        }
-      }
-      return Column(
-        children: widgets,
-      );
-    } else {
-      return const Padding(
-        padding: EdgeInsets.all(24.0),
-        child: Center(
-          child: Text(
-            Strings.noData,
-            style: TextStyle(color: Colors.grey),
-          ),
-        ),
-      );
-    }
-  }
+    // if (user?['score'].isNotEmpty) {
+    //   for (var e in user?['score']) {
+    //     if (e?['is_final']) {
+    //       widgets.add(
+    //         SkripsiSection(data: e!),
+    //       );
+    //     } else {
+    //       widgets.add(
+    //         NilaiSection(
+    //           data: e!,
+    //           onPress: (index) {},
+    //         ),
+    //       );
+    //     }
+    //   }
+    //   return Column(
+    //     children: widgets,
+    //   );
+    // } else {
+    //   return const Padding(
+    //     padding: EdgeInsets.all(24.0),
+    //     child: Center(
+    //       child: Text(
+    //         Strings.noData,
+    //         style: TextStyle(color: Colors.grey),
+    //       ),
+    //     ),
+    //   );
+    // }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -242,27 +242,27 @@ class _ValorEstudantePageState extends State<ValorEstudantePage> {
                         ],
                       ),
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: ListView.separated(
-                        padding: const EdgeInsets.only(
-                            top: 8, bottom: 8, left: 16, right: 16),
-                        itemCount: user?['score'].length,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          final data = user?['score'];
-                          if (data[index]['is_final']) {
-                            SkripsiSection(data: data);
-                          }
-                          return NilaiSection(
-                            data: data[index],
-                            onPress: (index) {},
-                          );
-                        },
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 0),
-                      ),
-                    ),
+                    // Expanded(
+                    //   flex: 1,
+                    //   child: ListView.separated(
+                    //     padding: const EdgeInsets.only(
+                    //         top: 8, bottom: 8, left: 16, right: 16),
+                    //     itemCount: user?['score'].length,
+                    //     shrinkWrap: true,
+                    //     itemBuilder: (context, index) {
+                    //       final data = user?['score'];
+                    //       if (data[index]['is_final']) {
+                    //         SkripsiSection(data: data);
+                    //       }
+                    //       return NilaiSection(
+                    //         data: data[index],
+                    //         onPress: (index) {},
+                    //       );
+                    //     },
+                    //     separatorBuilder: (context, index) =>
+                    //         const SizedBox(height: 0),
+                    //   ),
+                    // ),
                   ],
                 );
               }

@@ -70,7 +70,7 @@ import 'package:sia_fect/core/model/login_response_model.dart';
 class ApiServices {
   final storage = const FlutterSecureStorage();
   final String baseUrl =
-      "https://bf09-45-115-73-47.ap.ngrok.io/sia_fect_api/los/v1";
+      "https://08ac-45-115-73-27.ap.ngrok.io/sia_fect_api/los/v1";
   Dio dio = Dio();
 
   Future login({required String username, required String password}) async {
@@ -80,13 +80,10 @@ class ApiServices {
         'password': password,
       };
 
-      debugPrint("Base Url $baseUrl");
-      debugPrint("Params : $params");
       final result = await dio.post(baseUrl + "/userlogin.php",
           data: params,
           options: Options(
               headers: {'Content-Type': 'application/x-www-form-urlencoded'}));
-      debugPrint("Response HIT : $result");
 
       var response = result.data;
 
@@ -101,7 +98,12 @@ class ApiServices {
         debugPrint("Error !");
       }
     } on DioError catch (e) {
-      debugPrint(e.toString());
+      if (e.type == DioErrorType.connectTimeout) {
+        return LoginResponseModel(message: "Connection Time Out");
+      }
+      if (e.type == DioErrorType.other) {
+        return LoginResponseModel(message: "Database Service Error");
+      } else {}
       return e;
     }
   }
@@ -111,9 +113,8 @@ class ApiServices {
       final response = await dio.get(
         baseUrl + '/jsondata/' + nudep + '/' + nre + "_all.json",
       );
-
-      debugPrint("Response NRE LOAD : $response");
-
+      debugPrint("nre $nre");
+           debugPrint("nudep $nudep");
       var result = response.data;
       return result;
     } on DioError catch (e) {
