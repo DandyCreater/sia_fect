@@ -33,8 +33,6 @@ class NredataBloc extends Bloc<NredataEvent, NredataState> {
         DataResponseModel result =
             DataResponseModel.fromJson(jsonDecode(jsonEncode(response)));
 
-        
-
         if (response != null) {
           emit(NredataSuccess(value: result));
         } else {

@@ -70,7 +70,7 @@ import 'package:sia_fect/core/model/login_response_model.dart';
 class ApiServices {
   final storage = const FlutterSecureStorage();
   final String baseUrl =
-      "https://e2eb-45-115-73-55.ap.ngrok.io/sia_fect_api/los/v1";
+      "https://766e-45-115-73-54.ap.ngrok.io/sia_fect_api/los/v1";
   Dio dio = Dio();
 
   Future login({required String username, required String password}) async {

@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sia_fect/core/bloc/login/login_bloc.dart';
+import 'package:sia_fect/core/bloc/nre_data/nredata_bloc.dart';
 import 'package:sia_fect/core/const/color_pallete.dart';
 import 'package:sia_fect/core/const/strings.dart';
 import 'package:sia_fect/core/services/validator_service.dart';
@@ -50,6 +51,8 @@ class _LoginPageState extends State<LoginPage> {
       BlocProvider.of<LoginBloc>(context).add(FetchLogin(
           username: numberTextEditingController.text,
           password: passwordTextEditingController.text));
+      
+       BlocProvider.of<NredataBloc>(context).add(FetchNreData());
       // setState(() {
       //   isLoading = true;
       // });
@@ -122,6 +125,7 @@ class _LoginPageState extends State<LoginPage> {
           listener: (context, state) {
             if (state is LoginDispose) {
               const CircularProgressIndicator();
+              Future.delayed(const Duration(seconds: 2));
             }
             if (state is LoginSuccess) {
               Navigator.pushReplacementNamed(context, HomePage.routeName);

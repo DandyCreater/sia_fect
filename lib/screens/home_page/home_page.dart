@@ -44,13 +44,13 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     // setInitialData();
+   
 
     setMenus();
     super.initState();
   }
 
   void setMenus() async {
-    BlocProvider.of<NredataBloc>(context).add(FetchNreData());
     setState(() {
       final studentMenus = [
         MenuCard(

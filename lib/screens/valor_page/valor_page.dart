@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -52,7 +53,7 @@ class _ValorPageState extends State<ValorPage> {
 
   @override
   void initState() {
-    BlocProvider.of<NredataBloc>(context).add(FetchNreData());
+    // BlocProvider.of<NredataBloc>(context).add(FetchNreData());
     // setInitialData();
     super.initState();
   }
@@ -258,45 +259,92 @@ class _ValorPageState extends State<ValorPage> {
                               builder: (context, state) {
                                 if (state is NredataSuccess) {
                                   var data = state.value!.mediafre;
-
-                                  return DropdownButton(
-                                    isExpanded: true,
-                                    value: dropdownValue,
-                                    items: data!.map((selectedDropdown) {
-                                      return DropdownMenuItem(
-                                        value: selectedDropdown,
-                                        child: Text(
-                                          "${selectedDropdown.tinan} ${selectedDropdown.tipo}",
-                                          style: const TextStyle(
-                                              color: Colors.black),
-                                          textAlign: TextAlign.left,
+                                  return DropdownButtonHideUnderline(
+                                    child: DropdownButton2(
+                                      value: dropdownValue,
+                                      isExpanded: true,
+                                      hint: Text(
+                                        'Select Item',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Theme.of(context).hintColor,
                                         ),
-                                      );
-                                    }).toList(),
-                                    icon: const Icon(
-                                      Icons.arrow_drop_down,
-                                      color: Colors.black,
-                                      size: 40,
+                                      ),
+                                      items: data!.map((selectedDropdown) {
+                                        return DropdownMenuItem(
+                                          
+                                          value: selectedDropdown,
+                                          child: Text(
+                                            "${selectedDropdown.tinan} ${selectedDropdown.tipo}",
+                                            style: const TextStyle(
+                                                color: Colors.black),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        );
+                                      }).toList(),
+                                      onChanged: (Mediafre? value) {
+                                        setState(() {
+                                          dropdownValue = value;
+                                          iP = value!.ip;
+                                          media = value.totmediafre.toString();
+                                          selectedYear =
+                                              "${value.tinan.toString()} ${value.tipo.toString()}";
+
+                                          year = value.tinan.toString();
+                                          semester = value.tipo.toString();
+
+                                          scoreData = scores.firstWhere(
+                                              (element) =>
+                                                  element['year'] ==
+                                                  selectedYear.toString(),
+                                              orElse: (() => null));
+                                        });
+                                      },
+                                      buttonHeight: 40,
+                                      buttonWidth: 140,
+                                      itemHeight: 50,
+                                      dropdownMaxHeight: 400,
                                     ),
-                                    onChanged: (Mediafre? value) {
-                                      setState(() {
-                                        dropdownValue = value;
-                                        iP = value!.ip;
-                                        media = value.totmediafre.toString();
-                                        selectedYear =
-                                            "${value.tinan.toString()} ${value.tipo.toString()}";
-
-                                        year = value.tinan.toString();
-                                        semester = value.tipo.toString();
-
-                                        scoreData = scores.firstWhere(
-                                            (element) =>
-                                                element['year'] ==
-                                                selectedYear.toString(),
-                                            orElse: (() => null));
-                                      });
-                                    },
                                   );
+
+                                  // DropdownButton(
+                                  //   isExpanded: true,
+                                  //   value: dropdownValue,
+                                  //   items: data!.map((selectedDropdown) {
+                                  //     return DropdownMenuItem(
+                                  //       value: selectedDropdown,
+                                  //       child: Text(
+                                  //         "${selectedDropdown.tinan} ${selectedDropdown.tipo}",
+                                  //         style: const TextStyle(
+                                  //             color: Colors.black),
+                                  //         textAlign: TextAlign.left,
+                                  //       ),
+                                  //     );
+                                  //   }).toList(),
+                                  //   icon: const Icon(
+                                  //     Icons.arrow_drop_down,
+                                  //     color: Colors.black,
+                                  //     size: 40,
+                                  //   ),
+                                  // onChanged: (Mediafre? value) {
+                                  //   setState(() {
+                                  //     dropdownValue = value;
+                                  //     iP = value!.ip;
+                                  //     media = value.totmediafre.toString();
+                                  //     selectedYear =
+                                  //         "${value.tinan.toString()} ${value.tipo.toString()}";
+
+                                  //     year = value.tinan.toString();
+                                  //     semester = value.tipo.toString();
+
+                                  //     scoreData = scores.firstWhere(
+                                  //         (element) =>
+                                  //             element['year'] ==
+                                  //             selectedYear.toString(),
+                                  //         orElse: (() => null));
+                                  //   });
+                                  // },
+                                  // );
                                 }
                                 return const SkeletonAvatar();
                               },
