@@ -70,7 +70,7 @@ import 'package:sia_fect/core/model/login_response_model.dart';
 class ApiServices {
   final storage = const FlutterSecureStorage();
   final String baseUrl =
-      "https://9fe6-45-115-73-37.ap.ngrok.io/sia_fect_api/los/v1";
+      "https://e2eb-45-115-73-55.ap.ngrok.io/sia_fect_api/los/v1";
   Dio dio = Dio();
 
   Future login({required String username, required String password}) async {
@@ -92,20 +92,18 @@ class ApiServices {
             key: "loginKey",
             value: jsonEncode(response),
             aOptions: AndroidOptions.defaultOptions);
-
         return response;
-      } else {
-        debugPrint("Error !");
       }
     } on DioError catch (e) {
       debugPrint(e.message);
       if (e.message == "Http status error [404]") {
-        return LoginResponseModel(message: "Connection Time Out");
+        return "Connection Time Out";
       }
       if (e.type == DioErrorType.other) {
-        return LoginResponseModel(message: "Database Service Error");
-      } else {}
-      return e;
+        return "Database Service Error";
+      } else {
+        return e;
+      }
     }
   }
 
@@ -114,8 +112,7 @@ class ApiServices {
       final response = await dio.get(
         baseUrl + '/jsondata/' + nudep + '/' + nre + "_all.json",
       );
-      debugPrint("nre $nre");
-      debugPrint("nudep $nudep");
+
       var result = response.data;
       return result;
     } on DioError catch (e) {

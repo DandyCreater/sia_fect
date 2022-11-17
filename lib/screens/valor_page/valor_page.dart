@@ -96,8 +96,6 @@ class _ValorPageState extends State<ValorPage> {
   //   });
   // }
 
- 
-
   // Widget buildContentWidgets() {
   //   if (scoreData != null) {
   //     if (scoreData?['is_final']) {
@@ -290,7 +288,7 @@ class _ValorPageState extends State<ValorPage> {
 
                                         year = value.tinan.toString();
                                         semester = value.tipo.toString();
-                                        // selectedYear = value.toString();
+
                                         scoreData = scores.firstWhere(
                                             (element) =>
                                                 element['year'] ==
@@ -316,7 +314,6 @@ class _ValorPageState extends State<ValorPage> {
                   flex: 1,
                   child: BlocBuilder<NredataBloc, NredataState>(
                       builder: (context, state) {
-                   
                     if (state is NredataSuccess) {
                       var items = state.value!.mediafre!;
                       DataResponseModel? data = DataResponseModel();
@@ -329,7 +326,6 @@ class _ValorPageState extends State<ValorPage> {
                       var freData = data.mediafre![0].fre!;
                       var conditionsData = freData.toString();
                       if (conditionsData != "[]") {
-                        debugPrint("Kamu kesini");
                         return ListView.separated(
                           physics: const BouncingScrollPhysics(),
                           padding: const EdgeInsets.only(
@@ -347,7 +343,6 @@ class _ValorPageState extends State<ValorPage> {
                               const SizedBox(height: 0),
                         );
                       } else {
-                        debugPrint("Kamu disana");
                         return const Padding(
                           padding: EdgeInsets.all(24.0),
                           child: Center(

@@ -32,8 +32,14 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController numberTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
   bool isLoading = false;
-
+  bool isObsecured = true;
   // UserType? type;
+
+  obsecureFunction() {
+    setState(() {
+      isObsecured = !isObsecured;
+    });
+  }
 
   void actionLogin() async {
     FocusManager.instance.primaryFocus?.unfocus();
@@ -124,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    state.message!.message.toString(),
+                    state.messages.toString(),
                     style: const TextStyle(color: Colors.white),
                   ),
                   duration: const Duration(milliseconds: 1000),
@@ -243,13 +249,22 @@ class _LoginPageState extends State<LoginPage> {
                                     controller: passwordTextEditingController,
                                     keyboardType: TextInputType.text,
                                     textInputAction: TextInputAction.done,
-                                    decoration: const InputDecoration(
+                                    decoration: InputDecoration(
+                                      suffixIcon: IconButton(
+                                          onPressed: () {
+                                            obsecureFunction();
+                                          },
+                                          icon: Icon((isObsecured)
+                                              ? Icons.visibility
+                                              : Icons.visibility_off)),
                                       hintText: Strings.password,
-                                      counter: SizedBox.shrink(),
-                                      contentPadding: EdgeInsets.all(16.0),
-                                      prefixIcon: Icon(Icons.lock_open_rounded),
+                                      counter: const SizedBox.shrink(),
+                                      contentPadding:
+                                          const EdgeInsets.all(16.0),
+                                      prefixIcon:
+                                          const Icon(Icons.lock_open_rounded),
                                     ),
-                                    obscureText: true,
+                                    obscureText: (isObsecured) ? true : false,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return errorBlankInput(
