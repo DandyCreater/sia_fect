@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
                 NotificationPage.routeName: (context) =>
                     const NotificationPage(),
                 ProfilePage.routeName: (context) => const ProfilePage(),
-                ValorPage.routeName: (context) => const ValorPage(),
+                ValorPage.routeName: (context) => ValorPage(),
                 // ValorEstudantePage.routeName: (context) =>
                 //     const ValorEstudantePage(),
                 EditProfilePage.routeName: (context) => const EditProfilePage(),

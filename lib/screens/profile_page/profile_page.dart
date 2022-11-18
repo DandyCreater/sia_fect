@@ -89,10 +89,6 @@ class _ProfilePageState extends State<ProfilePage> {
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: ColorPallete.primary,
-                // borderRadius: BorderRadius.only(
-                //   bottomRight: Radius.circular(80),
-                //   bottomLeft: Radius.circular(80),
-                // ),
               ),
             ),
             Container(
@@ -157,14 +153,23 @@ class _ProfilePageState extends State<ProfilePage> {
                             ProfileCard(
                                 title: Strings.name, value: state.value!.nome!),
                             ProfileCard(
+                                title: Strings.address,
+                                value: state.value!.endereso!),
+                            ProfileCard(
+                                title: Strings.gender,
+                                value: state.value!.sexo!),
+                            ProfileCard(
+                                title: Strings.email,
+                                value: state.value!.email!),
+                            ProfileCard(
                                 title: Strings.placeOfBirth,
-                                value: user?['place_of_birth'] ?? ''),
+                                value: state.value!.lugarNasc!),
                             ProfileCard(
                                 title: Strings.dateOfBirth,
-                                value: user?['date_of_birth'] ?? ''),
+                                value: state.value!.dataNasc.toString()),
                             ProfileCard(
                                 title: Strings.phone,
-                                value: user?['phone'] ?? ''),
+                                value: state.value!.nuTelemovel.toString()),
                           ],
                         );
                       }

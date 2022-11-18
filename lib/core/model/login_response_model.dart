@@ -4,6 +4,14 @@ class LoginResponseModel {
   String? username;
   String? nre;
   String? nome;
+  int? tinanEstudo;
+  String? lugarNasc;
+  String? dataNasc;
+  String? sexo;
+  String? endereso;
+  String? nuTelemovel;
+  String? email;
+  String? foto;
   int? nudep;
   String? message;
   Status? status;
@@ -14,6 +22,14 @@ class LoginResponseModel {
       this.username,
       this.nre,
       this.nome,
+      this.tinanEstudo,
+      this.lugarNasc,
+      this.dataNasc,
+      this.sexo,
+      this.endereso,
+      this.nuTelemovel,
+      this.email,
+      this.foto,
       this.nudep,
       this.message,
       this.status});
@@ -24,6 +40,14 @@ class LoginResponseModel {
     username = json['username'];
     nre = json['nre'];
     nome = json['nome'];
+    tinanEstudo = json['Tinan_estudo'];
+    lugarNasc = json['lugar_nasc'];
+    dataNasc = json['data_nasc'];
+    sexo = json['sexo'];
+    endereso = json['Endereso'];
+    nuTelemovel = json['nu_telemovel'];
+    email = json['Email'];
+    foto = json['foto'];
     nudep = json['nudep'];
     message = json['message'];
     status = json['status'] != null ? Status.fromJson(json['status']) : null;
@@ -36,8 +60,15 @@ class LoginResponseModel {
     data['username'] = this.username;
     data['nre'] = this.nre;
     data['nome'] = this.nome;
+    data['Tinan_estudo'] = this.tinanEstudo;
+    data['lugar_nasc'] = this.lugarNasc;
+    data['data_nasc'] = this.dataNasc;
+    data['sexo'] = this.sexo;
+    data['Endereso'] = this.endereso;
+    data['nu_telemovel'] = this.nuTelemovel;
+    data['Email'] = this.email;
+    data['foto'] = this.foto;
     data['nudep'] = this.nudep;
-    data['message'] = this.message;
     return data;
   }
 }

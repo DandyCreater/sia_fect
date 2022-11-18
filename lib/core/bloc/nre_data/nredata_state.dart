@@ -30,3 +30,23 @@ class NredataFailed extends NredataState {
   // TODO: implement props
   List<Object> get props => [message!];
 }
+
+class NredataListSuccess extends NredataState {
+  final DataResponseModel? value;
+
+  const NredataListSuccess({required this.value});
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [value!];
+}
+
+class NredataListFailed extends NredataState {
+  final String? message;
+
+  const NredataListFailed({required this.message});
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [message!];
+}

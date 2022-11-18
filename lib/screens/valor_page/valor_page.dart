@@ -1,6 +1,6 @@
 // File valor_page.dart
 
-// ignore_for_file: await_only_futures
+// ignore_for_file: await_only_futures, unnecessary_this
 
 import 'dart:convert';
 
@@ -27,7 +27,8 @@ import 'package:skeletons/skeletons.dart';
 
 class ValorPage extends StatefulWidget {
   static const String routeName = '/valor';
-  const ValorPage({Key? key}) : super(key: key);
+  Mediafre? dropdownValues;
+  ValorPage({Key? key, this.dropdownValues}) : super(key: key);
 
   @override
   State<ValorPage> createState() => _ValorPageState();
@@ -51,11 +52,31 @@ class _ValorPageState extends State<ValorPage> {
   String? iP = "0.00";
   int index = 0;
 
+  readData() async {
+    BlocProvider.of<NredataBloc>(context).add(FetchNreData());
+    String? data = await storage.read(
+        key: 'nreValue', aOptions: AndroidOptions.defaultOptions);
+    var decodeData = jsonDecode(data!);
+    var finaldata = DataResponseModel.fromJson(decodeData!);
+    debugPrint(jsonEncode(finaldata));
+    setState(() {
+      dropdownValue = finaldata.mediafre!.first;
+      iP = finaldata.mediafre!.first.ip;
+      media = finaldata.mediafre!.first.ip;
+    });
+  }
+
   @override
   void initState() {
-    // BlocProvider.of<NredataBloc>(context).add(FetchNreData());
-    // setInitialData();
-    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await this.readData();
+      // setState(() {
+      //   BlocProvider.of<NredataBloc>(context).add(FetchNreData());
+      // });
+
+      // setInitialData();
+      super.initState();
+    });
   }
 
   // void setInitialData() async {
@@ -190,6 +211,8 @@ class _ValorPageState extends State<ValorPage> {
               if (state is NredataSuccess) {
                 setState(() {
                   dropdownValue = state.value!.mediafre!.first;
+                  iP = state.value!.mediafre!.first.ip;
+                  media = state.value!.mediafre!.first.ip;
                 });
               }
             },
@@ -272,7 +295,6 @@ class _ValorPageState extends State<ValorPage> {
                                       ),
                                       items: data!.map((selectedDropdown) {
                                         return DropdownMenuItem(
-                                          
                                           value: selectedDropdown,
                                           child: Text(
                                             "${selectedDropdown.tinan} ${selectedDropdown.tipo}",
@@ -346,6 +368,7 @@ class _ValorPageState extends State<ValorPage> {
                                   // },
                                   // );
                                 }
+
                                 return const SkeletonAvatar();
                               },
                             ),
@@ -363,16 +386,29 @@ class _ValorPageState extends State<ValorPage> {
                   child: BlocBuilder<NredataBloc, NredataState>(
                       builder: (context, state) {
                     if (state is NredataSuccess) {
+                      if (dropdownValue!.tinan == null &&
+                          dropdownValue!.tipo == null) {
+                        debugPrint("Haii");
+                      }
+                      debugPrint("DropdownValue : ${dropdownValue!.tinan}");
+                      debugPrint("ini alur 1 ");
                       var items = state.value!.mediafre!;
                       DataResponseModel? data = DataResponseModel();
+
                       List<Mediafre> dataitem = items
                           .where((element) =>
-                              element.tinan!.contains(year) &&
-                              element.tipo!.contains(semester))
+                              element.tinan!.contains(dropdownValue!.tinan!) &&
+                              element.tipo!.contains(dropdownValue!.tipo!))
                           .toList();
+
+                      debugPrint("ini alur 2 ");
+
                       data.mediafre = dataitem;
+
                       var freData = data.mediafre![0].fre!;
                       var conditionsData = freData.toString();
+                      debugPrint("ini freData : $freData");
+
                       if (conditionsData != "[]") {
                         return ListView.separated(
                           physics: const BouncingScrollPhysics(),

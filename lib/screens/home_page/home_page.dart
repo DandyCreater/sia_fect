@@ -1,12 +1,16 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sia_fect/core/bloc/login/login_bloc.dart';
 import 'package:sia_fect/core/bloc/nre_data/nredata_bloc.dart';
 import 'package:sia_fect/core/const/color_pallete.dart';
 import 'package:sia_fect/core/const/constants.dart';
 import 'package:sia_fect/core/const/strings.dart';
+import 'package:sia_fect/core/model/data_response_model.dart';
 import 'package:sia_fect/data/local/auth_services.dart';
 import 'package:sia_fect/screens/curriculum_page/curriculum_page.dart';
 import 'package:sia_fect/screens/e_learning/e_learning.dart';
@@ -33,6 +37,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final storage = const FlutterSecureStorage();
   final AuthServices _authServices = AuthServices();
   Map<String, dynamic>? user;
   List<Widget> menus = [];
@@ -43,8 +48,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    BlocProvider.of<NredataBloc>(context).add(FetchNreData());
     // setInitialData();
-   
 
     setMenus();
     super.initState();
@@ -56,8 +61,19 @@ class _HomePageState extends State<HomePage> {
         MenuCard(
           label: Strings.valor,
           icon: 'assets/icons/ic-cc.svg',
-          onPress: () {
-            Navigator.pushNamed(context, ValorPage.routeName);
+          onPress: () async {
+            // String? datajson = await storage.read(
+            //     key: 'nreValue', aOptions: AndroidOptions.defaultOptions);
+            // // var decodeData = jsonDecode(datajson!);
+            // var datavalue = DataResponseModel.fromJson(jsonDecode(datajson!));
+            // debugPrint("data Value $datavalue");
+            // return Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //         builder: ((context) => ValorPage(
+            //               dropdownValues: datavalue.mediafre![0],
+            //             ))));
+            return Navigator.pushNamed(context, ValorPage.routeName);
           },
         ),
         MenuCard(

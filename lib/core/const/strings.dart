@@ -26,6 +26,9 @@ class Strings {
   static const placeOfBirth = 'Place of Birth';
   static const dateOfBirth = 'Date of Birth';
   static const phone = 'Phone Number';
+  static const email = 'Email';
+  static const address = 'Address';
+  static const gender = 'Gender';
   // Edit Profile
   static const editProfile = 'Edit Profile';
   // Home

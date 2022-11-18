@@ -51,8 +51,8 @@ class _LoginPageState extends State<LoginPage> {
       BlocProvider.of<LoginBloc>(context).add(FetchLogin(
           username: numberTextEditingController.text,
           password: passwordTextEditingController.text));
-      
-       BlocProvider.of<NredataBloc>(context).add(FetchNreData());
+
+      BlocProvider.of<NredataBloc>(context).add(FetchNreData());
       // setState(() {
       //   isLoading = true;
       // });
@@ -124,7 +124,12 @@ class _LoginPageState extends State<LoginPage> {
         child: BlocListener<LoginBloc, LoginState>(
           listener: (context, state) {
             if (state is LoginDispose) {
-              const CircularProgressIndicator();
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const CircularProgressIndicator();
+                  });
+
               Future.delayed(const Duration(seconds: 2));
             }
             if (state is LoginSuccess) {

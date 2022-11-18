@@ -22,7 +22,7 @@ class NredataBloc extends Bloc<NredataEvent, NredataState> {
 
       String? storageData = await storage.read(
           key: 'loginKey', aOptions: AndroidOptions.defaultOptions);
-     
+
       var decodeData = jsonDecode(storageData!);
       var jsonData = LoginResponseModel.fromJson(jsonDecode(decodeData));
 
@@ -32,6 +32,11 @@ class NredataBloc extends Bloc<NredataEvent, NredataState> {
 
         DataResponseModel result =
             DataResponseModel.fromJson(jsonDecode(jsonEncode(response)));
+
+        await storage.write(
+            key: 'nreValue',
+            value: jsonEncode(result),
+            aOptions: AndroidOptions.defaultOptions);
 
         if (response != null) {
           emit(NredataSuccess(value: result));
